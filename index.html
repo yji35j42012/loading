@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .loadpages {
+            width: 100%;
+            height: 100vh;
+            background-color: #eee;
+            overflow: hidden;
+            transition-duration: .5s;
+        }
+
+        .page1 {
+            width: 100%;
+            height: 100%;
+            background-image: url('./img/bg.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page1 img {
+            position: relative;
+            width: 115px;
+            height: 70px;
+            position: relative;
+            transform: translate(-120%, -10px);
+            /* 265px 滿 */
+            z-index: 250;
+        }
+
+        .page1 .load_line {
+            position: absolute;
+            width: 300px;
+            height: 25px;
+            border: 1px solid #d04e02;
+            text-align: center;
+            line-height: 25px;
+        }
+
+        #load_line_txt {
+            position: relative;
+            z-index: 100;
+        }
+
+        #load_line_content {
+            position: absolute;
+            top: 0;
+            display: block;
+            width: 0;
+            height: 100%;
+            background-color: #fb9300;
+        }
+        .txt{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="loadpages">
+        <div class="page1">
+            <!-- <img src="./img/bg.jpg" alt=""> -->
+            <img src="蜜蜂GIF-right.gif" alt="" id="bee_img">
+            <div class="load_line">
+                <span id="load_line_txt">0%</span>
+                <span id="load_line_content"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        var timer;
+        var count = 0;
+        var oldcount = -120;
+        var w = $('.load_line').width()
+        function load() {
+            var time = Math.floor(Math.random() * 40) + 1
+            $('#load_line_content').css('width', count + "%");
+            $('#load_line_txt').text(count + '%')
+            oldcount = oldcount + (w / 120 * count)
+
+            console.log(oldcount);
+
+            $('#bee_img').css({
+                transform: 'translate(' + oldcount + '%, -10px)'
+                // transform: 'translate(365px, -10px)'
+            });
+
+            timer = setTimeout(load, time)
+            if (count == 100) {
+                clearTimeout(timer)
+                $('.loadpages').css('opacity' ,0)
+            }
+            oldcount = -120;
+            count++
+        }
+
+        load()
+
+    </script>
+</body>
+
+</html>
